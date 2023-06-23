@@ -2,3 +2,14 @@
  Market website
 
  learning how to make login system,registration system,logout and user level.
+
+ Programming languages
+ -HTML
+ -PHP
+ -SQL
+ -maybe JAVA SCRIPT
+
+ CSS Framework
+ -Bootstrap 5
+ PHP Framework
+ -maybe AJAX
