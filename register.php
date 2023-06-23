@@ -22,19 +22,59 @@ if (!isset($_POST["submit"])) {
     </head>
 
     <body>
-        <h1><a href="index.html">Shop tech</a></h1>
-        <h1>Sign up</h1>
-        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post"><br><br>
-            <input type="text" name="username" placeholder="username"><br><br>
-            <input type="text" name="name" placeholder="name"><br><br>
-            <input type="text" name="surname" placeholder="surname"><br><br>
-            <input type="email" name="email" placeholder="email"><br><br>
-            <input type="password" name="password" placeholder="password"><br><br>
-            <button type="submit" name="submit">
-                <h1>Sign up</h1>
-            </button>
-        </form>
-        <a href="login.php">Login</a>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Tech Shop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register.php">Signup</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <center><h1>Sign Up</h1></center>
+        <div class="container-sm">
+            <form method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="username">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">name</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" name="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">surname</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" name="surname">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">email</label>
+                    <input type="email" class="form-control" id="exampleInputPassword1" name="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary" name="submit">login</button>
+            </form>
+        </div>
     </body>
 
     </html>
