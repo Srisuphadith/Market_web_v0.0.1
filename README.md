@@ -4,12 +4,12 @@
  learning how to make login system,registration system,logout and user level.
 
  Programming languages<br>
- -HTML
- -PHP
- -SQL
- -maybe JAVA SCRIPT
+ -HTML<br>
+ -PHP<br>
+ -SQL<br>
+ -maybe JAVA SCRIPT<br>
 
- CSS Framework
- -Bootstrap 5
- PHP Framework
- -maybe AJAX
+ CSS Framework<br>
+ -Bootstrap 5<br>
+ PHP Framework<br>
+ -maybe AJAX<br>
