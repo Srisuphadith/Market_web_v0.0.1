@@ -53,7 +53,7 @@ if(isset($_SESSION["user_id"])and isset($_SESSION["user_level"])){
       <th>name</th>
       <th>price</th>
       <th>product details</th>
-      <th>cus id</th>
+      <th>seller id</th>
     </tr>
     <?php
     require_once "connect.php";

@@ -100,7 +100,7 @@ if (!isset($_POST["submit"])) {
 
     } else {
         #if empty
-        echo "enter please information";
+        echo "enter information please";
         header("refresh: 1; url = register.php");
     }
 }

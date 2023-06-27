@@ -70,7 +70,7 @@ if (isset($_SESSION["user_id"])) {
           <th>name</th>
           <th>price</th>
           <th>product details</th>
-          <th>cus id</th>
+          <th>seller id</th>
         </tr>
         <?php
         $sql = "SELECT * FROM product";
