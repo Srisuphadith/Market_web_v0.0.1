@@ -1,22 +1,40 @@
 <?php
 session_start();
 require_once "connect.php";
+
+
 if (isset($_GET["action"])) {
     if ($_GET["action"] == "add") {
-            if (empty($_SESSION["cart"])) {
-                $_SESSION["cart"][0] = array(3, 1, 2, 30);
-                $_SESSION["cart"][1] = 2;
-            } else {
-                echo $_SESSION["cart"][0][3];
-                echo $_SESSION["cart"][1];
+        $id = $_GET["id"];
+        $sql = "SELECT * FROM product WHERE product_id ='$id'";
+        $result_s = mysqli_query($link, $sql);
+        $da_po = mysqli_fetch_array($result_s);
+        if (empty($_SESSION["cart"])) {
+            $_SESSION["cart"][] = array_merge($da_po, array("quantity" => $_POST["quan"]));
+        } else {
+            foreach ($_SESSION["cart"] as $k => $v) {
+                $id_arr[] = $_SESSION["cart"][$k]["product_id"];
+                if ($_SESSION["cart"][$k]["product_id"] == $id) {
+                    $_SESSION["cart"][$k]["quantity"] += $_POST["quan"];
+                }
             }
-        
+            if (!in_array($id, $id_arr)) {
+                $_SESSION["cart"][] = array_merge($_SESSION["cart"], array_merge($da_po, array("quantity" => $_POST["quan"])));
+            }
+        }
     }
     if ($_GET["action"] == "remove") {
-        unset($_SESSION["cart"][0]);
-        unset($_SESSION["cart"][1]);
+        $ind = $_GET["ind"];
+        unset($_SESSION["cart"][$ind]);
+        if (empty($_SESSION["cart"])) {
+            unset($_SESSION["cart"]);
+        }
+    }
+    if ($_GET["action"] == "remove_all") {
+        unset($_SESSION["cart"]);
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +51,7 @@ if (isset($_GET["action"])) {
 </head>
 
 <body>
+    <a href="cart.php?action=remove_all">Empty Cart</a>
     <table width="100%">
         <tbody>
             <tr>
@@ -43,31 +62,85 @@ if (isset($_GET["action"])) {
                 <th>Price</th>
                 <th>Remove</th>
             </tr>
-            <tr>
-                <td>BC547</td>
-                <td>1</td>
-                <td>2</td>
-                <td>5</td>
-                <td>10</td>
-                <td>Remove</td>
-            </tr>
+            <?php
+            if (isset($_SESSION["cart"])) {
+                foreach ($_SESSION["cart"] as $k => $v) {
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $_SESSION["cart"][$k]["product_name"]; ?>
+                        </td>
+                        <td>
+                            <?php echo $_SESSION["cart"][$k]["product_id"]; ?>
+                        </td>
+                        <td>
+                            <?php echo $_SESSION["cart"][$k]["quantity"]; ?>
+                        </td>
+                        <td>
+                            <?php echo $_SESSION["cart"][$k]["product_price"]; ?>
+                        </td>
+                        <td>
+                            <?php echo $_SESSION["cart"][$k]["product_price"] * $_SESSION["cart"][$k]["quantity"]; ?>
+                        </td>
+                        <td><a href="cart.php?action=remove&ind=<?php echo $k; ?>">Remove</a></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+            <?php
+            if (isset($_SESSION["cart"])) {
+                ?>
+                <tr>
+                    <td colspan="3"></td>
+                    <td>sum</td>
+                    <td>
+                        <?php
+                        $price = 0;
+                        foreach ($_SESSION["cart"] as $k => $v) {
+                            $price += $_SESSION["cart"][$k]["product_price"] * $_SESSION["cart"][$k]["quantity"];
+                        }
+                        echo $price;
+                        ?>
+                    </td>
+                    <td>baht</td>
+                </tr>
+                <?php
+            }
+            ?>
         </tbody>
     </table>
 
-    <div class="container">
-        <div class="image">
-            <img src="bc547.jpg" alt="images" width="200" height="200">
-        </div>
-        <form action="cart.php?action=add" method="post">
-            <div class="footer">
-                <div>BC547</div>
-                <div>5</div>
-                <input value="1">
-                <button type="submit">Add</button>
+
+    <?php
+    $sql = "SELECT * FROM product";
+    $result = mysqli_query($link, $sql);
+    while ($data = mysqli_fetch_assoc($result)) {
+        $result_arr[] = $data;
+    }
+    foreach ($result_arr as $key => $value) {
+        ?>
+        <div class="container">
+            <div class="image">
+                <img src="<?php echo $result_arr[$key]["path_img"]; ?>" alt="images" width="200" height="200">
             </div>
-        </form>
-    </div>
-    <a href="cart.php?action=remove">remove</a>
+            <form action="cart.php?action=add&id=<?php echo $result_arr[$key]["product_id"]; ?>" method="post">
+                <div class="footer">
+                    <div>
+                        <?php echo $result_arr[$key]["product_name"]; ?>
+                    </div>
+                    <div>
+                        <?php echo $result_arr[$key]["product_price"]; ?> baht
+                    </div>
+                    <input value="1" name="quan">
+                    <button type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+        <?php
+    }
+    ?>
+
 
 </body>
 
