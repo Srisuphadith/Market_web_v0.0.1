@@ -53,19 +53,21 @@ if(isset($_SESSION["user_id"])and isset($_SESSION["user_level"])){
       <th>name</th>
       <th>price</th>
       <th>product details</th>
-      <th>seller id</th>
+      <th>view details</th>
     </tr>
     <?php
     require_once "connect.php";
     $sql = "SELECT * FROM product";
     $result_p = mysqli_query($link, $sql);
-    while ($pro = mysqli_fetch_array($result_p)) {
+    while ($pro = mysqli_fetch_assoc($result_p)) {
       echo "<tr>";
-      for ($i = 0; $i < mysqli_num_fields($result_p); $i++) {
-        echo "<td>";
-        echo "  " . $pro[$i] . "  ";
-        echo "</td>";
-      }
+?>
+      <td><?php echo $pro["product_id"]?></td>
+      <td><?php echo $pro["product_name"]?></td>
+      <td><?php echo $pro["product_price"]?></td>
+      <td><?php echo $pro["product_detail"]?></td>
+      <td><a href="pro_detail.php?id=<?php echo $pro["product_id"]?>">view</a></td>
+<?php
       echo "</tr>";
     }
     ?>

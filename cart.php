@@ -111,36 +111,38 @@ if (isset($_GET["action"])) {
         </tbody>
     </table>
 
-
-    <?php
-    $sql = "SELECT * FROM product";
-    $result = mysqli_query($link, $sql);
-    while ($data = mysqli_fetch_assoc($result)) {
-        $result_arr[] = $data;
-    }
-    foreach ($result_arr as $key => $value) {
-        ?>
-        <div class="container">
-            <div class="image">
-                <img src="<?php echo $result_arr[$key]["path_img"]; ?>" alt="images" width="200" height="200">
-            </div>
-            <form action="cart.php?action=add&id=<?php echo $result_arr[$key]["product_id"]; ?>" method="post">
-                <div class="footer">
-                    <div>
-                        <?php echo $result_arr[$key]["product_name"]; ?>
-                    </div>
-                    <div>
-                        <?php echo $result_arr[$key]["product_price"]; ?> baht
-                    </div>
-                    <input value="1" name="quan">
-                    <button type="submit">Add</button>
-                </div>
-            </form>
-        </div>
+    <div style="display:flex; padding-top:100px;">
         <?php
-    }
-    ?>
-
+        $sql = "SELECT * FROM product";
+        $result = mysqli_query($link, $sql);
+        while ($data = mysqli_fetch_assoc($result)) {
+            $result_arr[] = $data;
+        }
+        foreach ($result_arr as $key => $value) {
+            ?>
+            <div class="container"
+                style="display:flex; background-color:lightblue; border-radius:20px; width:500px; padding:20px;">
+                <div class="image" style="padding-right:20px;">
+                    <img src="<?php echo $result_arr[$key]["path_img"]; ?>" alt="images" width="200" height="200"
+                        style="border-radius:20px;">
+                </div>
+                <form action="cart.php?action=add&id=<?php echo $result_arr[$key]["product_id"]; ?>" method="post">
+                    <div class="footer">
+                        <div>
+                            <?php echo $result_arr[$key]["product_name"]; ?>
+                        </div>
+                        <div>
+                            <?php echo $result_arr[$key]["product_price"]; ?> baht
+                        </div>
+                        <input value="1" name="quan">
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
 
 </body>
 
